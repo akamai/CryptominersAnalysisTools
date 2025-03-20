@@ -1,15 +1,15 @@
 # CryptominersAnalysisTools
-A collection of tools for cryptominers analysis. Part of the Cryptominers Anatomy blog series by Maor Dahan.
 
+A collection of tools for analyzing cryptominer activity. This repository is part of the Cryptominers' Anatomy blog series by Maor Dahan. The tools were published in conjunction with the blog posts, with usage instructions and real-world use cases provided directly from the research.
 
-## Candidate table (Part I)
-In the first blog there is a candidate table that was generated using this tool. The table holds
-the most relevant crypto coins that attacker could use for its cryptomining malware. They are sorted
-by the profitability of mining them using a formula that considered its reward per block mining and
-the network hashrate which predict the chances of wining the block mining race respective to the botnet
-size and computing power.
+Using these tools, you can adopt the attacker's mindset to track down cryptominer campaigns. In addition to hunting campaigns, you can use the tools to detect malicious mining activities within your systems and ultimately fight back to mitigate the attacker's grip on your resources.
 
-Here is an example of it's output where the most relevant coins are both privacy and ASIC resistant ones.
+## Candidate Table ([Part I](https://www.akamai.com/blog/security-research/2025-february-cryptominer-anatomy-internals))
+
+This component generates a candidate table that lists the most relevant cryptocurrencies an attacker might target for cryptomining malware. The coins are ranked by profitability using a formula that considers both the reward per mined block and the network hashrate, predicting the chances of winning the block mining race relative to the botnet's size and computing power.
+
+Example output where the most relevant coins are privacy-focused and ASIC resistant:
+
 ```
 Name                     | Algorithm    | Privacy Coin | ASIC resistant | KHR Profit
 ------------------------------------------------------------------------------------
@@ -55,8 +55,63 @@ Zephyr - exchanges: 9 - markets: 15
 Verus - exchanges: 3 - markets: 6
 ```
 
+## Blockchain Network Crawler ([Part II](https://www.akamai.com/blog/security-research/cryptominer-analyzing-samples-active-campaigns))
+
+This tool crawls blockchain networks based on the Cryptonote P2P protocol, with a focus on Monero-like blockchains. It can, however, be generalized to any decentralized proof-of-work blockchain. The crawler outputs a list of known node peers (publicly accessible nodes) and generates a world map displaying these nodes with geolocation and heat map overlays.
+
+### Quick Usage
+
+There is a preset configuration for Monero and Safex. You may also use the `custom` option for other Cryptonote-based networks.
+
+Run the following command to get started:
+
+```
+python ./blockchain_network_crawler/main.py monero
+```
+
+Command-line help output:
+
+```
+usage: main.py [-h] [-n NODE] [-p PORT] [--network-id NETWORK_ID] [--cleanup] {monero,safex,custom}
+
+A blockchain network crawler for networks based on the Cryptonote P2P protocol, such as Monero.
+
+positional arguments:
+  {monero,safex,custom}
+                        Select the network you want to crawl.
+
+options:
+  -h, --help            Show this help message and exit.
+  -n NODE, --node NODE  Specify the IPv4 address of a seed node.
+  -p PORT, --port PORT  Specify the port number of the seed node.
+  --network-id NETWORK_ID
+                        Provide the hex string ID of the network.
+  --cleanup             Clean up cached files.
+```
+
+### Geo-Location Map of Nodes
+
+The tool generates an HTML file that overlays blockchain nodes on a world map.
+
+Example result: 
+![heat_map_monero_2025](blockchain_network_crawler/example_output/heat_map_monero_2025.png)
+
 ## Acknowledgments
-Akamai data science department for insighhtful data.
+
+Akamai data science department for **insightful** data.
 
 ## License
-This repository is under [Apache License 2.0](https://github.com/akamai/CryptominersAnalysisTools/blob/main/LICENSE)
+
+Copyright 2025 Akamai Technologies Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
